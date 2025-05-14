@@ -252,33 +252,56 @@ export class WeReadApi {
     }
   }
 
-  private async retry<T>(func: () => Promise<T>, maxAttempts = 3, waitMs = 5000): Promise<T> {
-    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-      try {
-        return await func();
-      } catch (error: any) {
-        if (error.response) {
-          console.error(`响应状态: ${error.response.status}`);
-        }
-        
-        if (attempt === maxAttempts) {
-          throw error;
-        }
-        
-        const randomWait = waitMs + Math.floor(Math.random() * 3000);
-        console.warn(`第${attempt}次尝试失败，${randomWait}ms后重试...`);
-        await new Promise(resolve => setTimeout(resolve, randomWait));
+/**
+ * 该方法用于对一个异步函数进行重试操作，直到函数成功执行或达到最大重试次数。
+ * 
+ * @template T - 异步函数返回值的类型。
+ * @param func - 一个返回 Promise 的函数，该函数是需要重试的操作。
+ * @param maxAttempts - 最大重试次数，默认为 3 次。
+ * @param waitMs - 每次重试前的基础等待时间（毫秒），默认为 5000 毫秒。实际等待时间会在此基础上加上 0 到 3000 毫秒的随机值。
+ * @returns 返回一个 Promise，该 Promise 在函数成功执行时解析为函数的返回值，若所有重试都失败，则抛出错误。
+ */
+private async retry<T>(func: () => Promise<T>, maxAttempts = 3, waitMs = 5000): Promise<T> {
+  // 开始重试循环，从第 1 次尝试开始，直到达到最大重试次数
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      // 尝试执行传入的异步函数，并返回其结果
+      return await func();
+    } catch (error: any) {
+      // 如果错误对象包含响应信息，打印响应状态码
+      if (error.response) {
+        console.error(`响应状态: ${error.response.status}`);
       }
+      
+      // 如果已经达到最大重试次数，将错误抛出
+      if (attempt === maxAttempts) {
+        throw error;
+      }
+      
+      // 计算本次重试前的等待时间，基础等待时间加上 0 到 3000 毫秒的随机值
+      const randomWait = waitMs + Math.floor(Math.random() * 3000);
+      // 打印重试提示信息，告知用户当前是第几次尝试失败以及下次重试的等待时间
+      console.warn(`第${attempt}次尝试失败，${randomWait}ms后重试...`);
+      // 等待指定的时间后再进行下一次重试
+      await new Promise(resolve => setTimeout(resolve, randomWait));
     }
-    throw new Error("所有重试都失败了");
   }
+  // 如果所有重试都失败了，抛出一个错误提示信息
+  throw new Error("所有重试都失败了");
+}
 
-  private async ensureInitialized(): Promise<void> {
-    if (!this.initialized) {
-      await this.initAsync();
-    }
+/**
+ * 确保 `WeReadApi` 实例已经初始化。
+ * 如果实例尚未初始化（`this.initialized` 为 `false`），则调用 `initAsync` 方法进行异步初始化。
+ * 该方法通常在执行需要初始化完成后才能进行的操作之前调用，以保证操作的正常执行。
+ * 
+ * @returns {Promise<void>} 一个 Promise，当实例初始化完成或已经初始化时解析。
+ */
+private async ensureInitialized(): Promise<void> {
+  if (!this.initialized) {
+    await this.initAsync();
   }
-
+}
   private getStandardHeaders(): Record<string, string> {
     return {
       'Cookie': this.cookie,
@@ -343,33 +366,38 @@ export class WeReadApi {
     }
   }
 
-  // 获取书架信息（存在笔记的书籍）
-  public async getBookshelf(): Promise<any> {
-    await this.ensureInitialized();
-    return this.retry(async () => {
-      const data = await this.makeApiRequest<any>(WEREAD_NOTEBOOKS_URL, "get");
-      return data;
-    });
-  }
-
-  // 获取所有书架书籍信息
-  public async getEntireShelf(): Promise<any> {
+  // 获取书架信息，包含所有的书，和分组，阅读进度等信息
+  public async getShelf(): Promise<any> {
     await this.ensureInitialized();
     return this.retry(async () => {
       return await this.makeApiRequest<any>(WEREAD_SHELF_SYNC_URL, "get");
     });
   }
 
-  // 获取笔记本列表
-  public async getNotebooklist(): Promise<any[]> {
-    await this.ensureInitialized();
-    return this.retry(async () => {
-      const data = await this.makeApiRequest<any>(WEREAD_NOTEBOOKS_URL, "get");
-      return data.books || [];
-    });
-  }
+// 获取存在笔记的书籍信息，
+/** 数据格式:
+ {
+  "synckey": 1747177544,
+  "totalBookCount": 132,
+  "noBookReviewCount": 0,
+  "books": [
+    {},{},……,{}
+  ]
+} **/
+public async getNoteBooks(): Promise<any> {
+  await this.ensureInitialized();
+  return this.retry(async () => {
+    return await this.makeApiRequest<any>(WEREAD_NOTEBOOKS_URL, "get");
+  });
+}
 
-  // 获取书籍信息
+// 获取有笔记的书的列表,只取结果中的books
+public async getNotebooklist(): Promise<any[]> {
+  const data = await this.getNoteBooks();
+  return data.books || [];
+}
+
+  // 获取指定数据的书籍信息
   public async getBookinfo(bookId: string): Promise<any> {
     await this.ensureInitialized();
     return this.retry(async () => {
@@ -377,7 +405,7 @@ export class WeReadApi {
     });
   }
 
-  // 获取书籍的划线记录
+  // 获取指定书籍的划线记录，不传bookId则获取所有
   public async getBookmarkList(bookId: string): Promise<any[]> {
     await this.ensureInitialized();
     return this.retry(async () => {
@@ -389,7 +417,7 @@ export class WeReadApi {
     });
   }
 
-  // 获取阅读进度
+  // 获取指定书籍的阅读进度
   public async getReadInfo(bookId: string): Promise<any> {
     await this.ensureInitialized();
     return this.retry(async () => {
@@ -397,7 +425,7 @@ export class WeReadApi {
     });
   }
 
-  // 获取笔记/想法列表
+  // 获取指定书籍的笔记/想法列表
   public async getReviewList(bookId: string): Promise<any[]> {
     await this.ensureInitialized();
     return this.retry(async () => {
@@ -434,7 +462,7 @@ export class WeReadApi {
     });
   }
 
-  // 获取章节信息
+  // 获取指定书籍的章节信息
   public async getChapterInfo(bookId: string): Promise<Record<string, ChapterInfo>> {
     await this.ensureInitialized();
     return this.retry(async () => {
@@ -520,14 +548,14 @@ export class WeReadApi {
         
         if (update) {
           // 添加点评章节
-          update.push({
+          /*  update.push({
             chapterUid: 1000000,
             chapterIdx: 1000000,
             updateTime: 1683825006,
             readAhead: 0,
             title: "点评",
             level: 1
-          });
+          }); */
           
           // 确保chapterUid始终以字符串形式作为键
           const result = update.reduce((acc: Record<string, ChapterInfo>, curr: ChapterInfo) => {

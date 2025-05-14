@@ -1,156 +1,143 @@
-## 获取书架所有书籍信息
-Request:https://weread.qq.com/web/shelf/sync
-Response:
+## 获取书架信息
+### Request
+
+https://weread.qq.com/web/shelf/sync
+
+无参
+
+### Response
 
 ```json
 {
-  "pureBookCount": 369,
-  "bookCount": 369,
+  "pureBookCount": 578,
+  "bookCount": 578,
   "bookProgress": [  // 所有书籍的阅读进度信息
-    {
-      "bookId": "25462590",
-      "progress": 0,
-      "chapterUid": 33,
-      "chapterOffset": 2239,
-      "chapterIdx": 33,
-      "appId": "3353137241554521178831221182",
-      "updateTime": 1630036453,
-      "readingTime": 905,
-      "synckey": 1533826208
+        {
+      "bookId": "23303745",
+      "progress": 0, // 0表示未读，100表示读完
+      "chapterUid": 5,
+      "chapterOffset": 2034,
+      "chapterIdx": 5,
+      "appId": "35711832172614269128502745021697888382",
+      "updateTime": 1745114942,
+      "readingTime": 90,
+      "synckey": 485411444
     },
     {
-      "bookId": "674048",
-      "progress": 100,
-      "chapterUid": -2147473635,
-      "chapterOffset": 0,
-      "chapterIdx": 0,
-      "appId": "3353137241554521178831221182",
-      "updateTime": 1691553901,
-      "readingTime": 60937,
-      "synckey": 622417344
+      "bookId": "23562078",
+      "progress": 0,
+      "chapterUid": 5,
+      "chapterOffset": 739,
+      "chapterIdx": 5,
+      "appId": "35711832172614269128502745021697888382",
+      "updateTime": 1746226178,
+      "readingTime": 0,
+      "synckey": 1069336956
     },
     {...}
   ],
-  "synckey": 1746615117,
+  "synckey": 1747100438,
   "removed": [],
   "lectureRemoved": [],
-  "archive": [  //书架的书单分类（每个书单下的bookIds就是这个书单下的书籍id）
+  "archive": [  //书架的分组（其中的bookIds就是这个分组下的书籍id）
+
+	{
+      "archiveId": 1741486369,
+      "name": "路遥",
+      "bookIds": [],
+      "removed": [],
+      "lectureBookIds": [],
+      "lectureRemoved": []
+    },
     {
-      "archiveId": 1577525704,
-      "name": "思考与生活",
+      "archiveId": 1537701736,
+      "name": "探案",
       "bookIds": [
-        "3300038402",
-        "CB_7ZE2uC2tpC4r6of6okE7DDuH",
-        "26934843",
-        "27371794",
-        "22297605",
-        "40457732",
-        "3300048761",
-        "695126",
-        "635922",
-        "22717294",
-        "3300102987",
-        "31144247",
-        "32307641",
-        "30914575",
-        "27256052",
-        "926781",
-        "924614",
-        "921080",
-        "26406758",
-        "856239",
-        "30730465",
-        "3300079777",
-        "857527",
-        "30887804",
-        "837932",
-        "908161",
-        "26307930",
-        "921568",
-        "921826",
-        "41147996",
-        "41521586",
-        "216212",
-        "3300056238",
-        "3300018688",
-        "3300050528",
-        "23723810",
-        "23691233",
-        "44000669",
-        "916688",
-        "CB_FjNDOrDPjB4g6Xu6YI",
-        "237732",
-        "42766056",
-        "39136896",
-        "855327"
+        "3300098444",
+        "3300108408",
+        ……       
+        "823533",
+        "340459",
+        "CB_G7VAG9AJUAec6j06gY4mK4ho", // CB_开头表示导入的书籍
+        "840704",
+        "847930"
       ],
       "removed": [],
       "lectureBookIds": [],
       "lectureRemoved": []
     },
     {
-      "archiveId": 1584375687,
-      "name": "思维能力",
+      "archiveId": 1715836215,
+      "name": "技术",
       "bookIds": [
-        "909892",
-        "566431",
-        ...]
-    }
+        "687994",
+        "3300018278",
+        "38894783",
+        "37408826",
+        "3300028078",
+        "3300008341",
+        "29971992",
+        "3300085322",
+        "22806910",
+        "33381009",
+        "27563396",
+        "26793576",
+        "41787784",
+        "27337404"
+      ],
+      "removed": [],
+      "lectureBookIds": [],
+      "lectureRemoved": []
+    }   
   ],
   "removedArchive": [],
   "books": [   //所有书籍详细信息
-    {
-      "bookId": "3300079777",
-      "title": "佛陀之心",
-      "author": "一行禅师",
-      "translator": "方怡蓉",
-      "cover": "https://cdn.weread.qq.com/weread/cover/38/cpplatform_1efkwdszvystemugkexfxd/t6_cpplatform_1efkwdszvystemugkexfxd1701138290.jpg",
-      "version": 184669923,
+	{
+      "bookId": "25566784",
+      "title": "犹大之窗",
+      "author": "约翰·迪克森·卡尔",
+      "translator": "蔡妙",
+      "cover": "https://cdn.weread.qq.com/weread/cover/25/YueWen_25566784/t6_YueWen_25566784.jpg",
+      "version": 2010549587,
       "format": "epub",
       "type": 0,
-      "price": 21.99,
+      "price": 24.99,
       "originalPrice": 0,
       "soldout": 0,
       "bookStatus": 1,
       "payingStatus": 2,
       "payType": 1048577,
-      "lastChapterCreateTime": 1701138295,
-      "centPrice": 2199,
+      "lastChapterCreateTime": 0,
+      "centPrice": 2499,
       "finished": 1,
-      "maxFreeChapter": 9,
+      "maxFreeChapter": 6,
       "maxFreeInfo": {
-        "maxFreeChapterIdx": 9,
-        "maxFreeChapterUid": 9,
-        "maxFreeChapterRatio": 30
+        "maxFreeChapterIdx": 6,
+        "maxFreeChapterUid": 6,
+        "maxFreeChapterRatio": 75
       },
       "free": 0,
       "mcardDiscount": 0,
       "ispub": 1,
-      "extra_type": 7,
-      "updateTime": 1701206578,
-      "publishTime": "2010-10-01 00:00:00",
-      "category": "哲学宗教-宗教",
+      "extra_type": 5,
+      "updateTime": 1712036035,
+      "publishTime": "2019-05-01 00:00:00",
+      "category": "精品小说-悬疑推理",
       "categories": [
         {
-          "categoryId": 600000,
-          "subCategoryId": 600010,
+          "categoryId": 100000,
+          "subCategoryId": 100008,
           "categoryType": 0,
-          "title": "哲学宗教-宗教"
-        },
-        {
-          "categoryId": 1000000,
-          "subCategoryId": 1000003,
-          "categoryType": 0,
-          "title": "个人成长-情绪心灵"
+          "title": "精品小说-悬疑推理"
         }
       ],
       "hasLecture": 0,
-      "lastChapterIdx": 34,
+      "lastChapterIdx": 24,
       "paperBook": {
-        "skuId": ""
+        "skuId": "12612090"
       },
       "copyrightChapterUids": [2],
-      "blockSaveImg": 1,
+      "blockSaveImg": 0,
       "language": "zh",
       "isTraditionalChinese": false,
       "hideUpdateTime": false,
@@ -162,46 +149,74 @@ Response:
       "isAutoDownload": 1,
       "showLectureButton": 1,
       "secret": 0,
-      "readUpdateTime": 1741506226,
+      "readUpdateTime": 1742167774,
       "finishReading": 1,
       "paid": 1
     },
-    {
-      "bookId": "921826",
-      "title": "心流：最优体验心理学",
-      "author": "米哈里·契克森米哈赖",
-      "translator": "张定绮",
-      "cover": "https://wfqqreader-1252317822.image.myqcloud.com/cover/826/921826/t6_921826.jpg",
-      "version": 303293008,
-      "format": "epub",
+	{
+      "bookId": "CB_G7VAG9AJUAec6j06gY4mK4ho", // CB_开头表示导入的书籍
+      "title": "《13· 67》作者：陈浩基",
+      "author": "",
+      "cover": "https://weread-1258476243.file.myqcloud.com/app/assets/bookcover/book_cover_default_imported_01.png",
+      "version": 0,
+      "format": "txt",
       "type": 0,
-      "price": 29.4,
+      "price": 0,
       "originalPrice": 0,
       "soldout": 0,
-      "bookStatus": 1,
-      "payingStatus": 2,
-      "payType": 1048577,
-      "lastChapterCreateTime": 1681145102,
-      "centPrice": 2940,
-      ...
-      }
+      "bookStatus": 2,
+      "payingStatus": 0,
+      "payType": 134217761,
+      "centPrice": 0,
+      "finished": 1,
+      "free": 1,
+      "mcardDiscount": 0,
+      "ispub": 0,
+      "lastChapterCreateTime": 0,
+      "publishTime": "",
+      "hasLecture": 0,
+      "lastChapterIdx": 7,
+      "paperBook": {
+        "skuId": ""
+      },
+      "copyrightChapterUids": [],
+      "limitShareChat": 0,
+      "blockSaveImg": 0,
+      "language": "zh-wr",
+      "isTraditionalChinese": false,
+      "hideUpdateTime": false,
+      "isEPUBComics": 0,
+      "isVerticalLayout": 0,
+      "isShowTTS": 1,
+      "webBookControl": 0,
+      "selfProduceIncentive": false,
+      "isAutoDownload": 1,
+      "showLectureButton": 1,
+      "secret": 1,
+      "readUpdateTime": 1697297086,
+      "finishReading": 1,
+      "paid": 0,
+      "updateTime": 1694407191
+    },
+      ……
   ],
   "lectureBooks": [],
-  "lectureSynckey": 1746623623,
+  "lectureSynckey": 1747116961,
   "lectureUpdate": [],
   "mp": {    //微信公众号
-    "show": 1,
-    "book": {
-      "bookId": "mpbook",
-      "title": "文章收藏",
-      "cover": "https://weread-1258476243.file.myqcloud.com/app/assets/bookcover/book_cover_app_favorite_articles.png",
-      "secret": 1,
-      "payType": 32,
-      "paid": 0,
-      "updateTime": 1629705470,
-      "readUpdateTime": 0,
-      "isTop": false
-    }
+		"show": 1,
+		"book": {
+          "bookId": "mpbook",
+          "title": "文章收藏",
+          "cover": "https://weread-1258476243.file.myqcloud.com/app/assets/bookcover/book_cover_app_favorite_articles.png",
+          "secret": 1,
+          "payType": 32,
+          "paid": 0,
+          "updateTime": 1705187507,
+          "readUpdateTime": 1705315197,
+          "isTop": false
+		}
+	}
   }
 ```
 
@@ -211,56 +226,66 @@ Response:
 
 其中sort 是该本书最后笔记更新时间
 
-Request:https://weread.qq.com/api/user/notebook
-Response:
+### Request
+
+https://weread.qq.com/api/user/notebook
+
+无参
+
+### Response
 
 ```json
 {
-  "synckey": 1743773721,
-  "totalBookCount": 208,
+  "synckey": 1747117374,
+  "totalBookCount": 132,
   "noBookReviewCount": 0,
   "books": [
-    {
-      "bookId": "27416212",
+	{
+      "bookId": "3300138251",
       "book": {
-        "bookId": "27416212",
-        "title": "隐藏的自我",
-        "author": "大卫·伊格曼　",
-        "translator": "钱静",
-        "cover": "https://cdn.weread.qq.com/weread/cover/83/YueWen_27416212/s_YueWen_27416212.jpg",
-        "version": 56464877,
+        "bookId": "3300138251",
+        "title": "秋收（轻经典）",
+        "author": "茅盾",
+        "cover": "https://cdn.weread.qq.com/weread/cover/98/cpplatform_bnwuakmud7ub1bw7ch99ej/t6_cpplatform_bnwuakmud7ub1bw7ch99ej1742787027.jpg",
+        "version": 2051282504,
         "format": "epub",
         "type": 0,
-        "price": 39.9,
+        "price": 9.9,
         "originalPrice": 0,
         "soldout": 0,
         "bookStatus": 1,
-        "payingStatus": 2,
-        "payType": 1048577,
-        "centPrice": 3990,
+        "payingStatus": 1,
+        "payType": 134221825,
+        "centPrice": 990,
         "finished": 1,
+        "maxFreeChapter": 3,
+        "maxFreeInfo": {
+          "maxFreeChapterIdx": 3,
+          "maxFreeChapterUid": 7,
+          "maxFreeChapterRatio": 26
+        },
         "free": 0,
         "mcardDiscount": 0,
         "ispub": 1,
-        "extra_type": 1,
-        "cpid": 4789723,
-        "publishTime": "2019-12-19 00:00:00",
+        "extra_type": 5,
+        "cpid": 1000000121,
+        "publishTime": "2025-03-24 00:00:00",
         "categories": [
           {
-            "categoryId": 1500000,
-            "subCategoryId": 1500003,
+            "categoryId": 300000,
+            "subCategoryId": 300004,
             "categoryType": 0,
-            "title": "科学技术-科学科普"
+            "title": "文学-经典作品"
           }
         ],
-        "hasLecture": 1,
-        "lastChapterIdx": 58,
+        "hasLecture": 0,
+        "lastChapterIdx": 5,
         "paperBook": {
-          "skuId": "12610905"
+          "skuId": ""
         },
-        "copyrightChapterUids": [2],
+        "copyrightChapterUids": [6],
         "blockSaveImg": 0,
-        "language": "zh",
+        "language": "zh-wr",
         "isTraditionalChinese": false,
         "hideUpdateTime": false,
         "isEPUBComics": 0,
@@ -270,12 +295,12 @@ Response:
         "selfProduceIncentive": false,
         "isAutoDownload": 1
       },
-      "reviewCount": 4,
-      "reviewLikeCount": 0,
+      "reviewCount": 1,
+      "reviewLikeCount": 1,
       "reviewCommentCount": 0,
-      "noteCount": 42,
+      "noteCount": 0,
       "bookmarkCount": 0,
-      "sort": 1743738132
+      "sort": 1743982842
     },
     ... //其他book信息
     ]
@@ -284,10 +309,16 @@ Response:
 
 
 
-## 获取书籍详情
+## 获取指定书籍的详情
 ### Request
 
 https://weread.qq.com/api/book/info?bookId=27416212
+
+参数
+
+| 参数名 | 说明   |
+| ------ | ------ |
+| bookId | 书的id |
 
 ### Response
 
@@ -455,118 +486,7 @@ https://weread.qq.com/api/book/info?bookId=27416212
         "key": "6/4",
         "hex": "#969391"
       },
-      {
-        "key": "4/4",
-        "hex": "#635f5e"
-      },
-      {
-        "key": "3/4",
-        "hex": "#4a4746"
-      },
-      {
-        "key": "3/6",
-        "hex": "#4a4746"
-      },
-      {
-        "key": "3/8",
-        "hex": "#4a4746"
-      },
-      {
-        "key": "2/4",
-        "hex": "#33302f"
-      },
-      {
-        "key": "2/6",
-        "hex": "#33302f"
-      },
-      {
-        "key": "2/8",
-        "hex": "#33302f"
-      },
-      {
-        "key": "1/4",
-        "hex": "#1f1c1b"
-      },
-      {
-        "key": "1/6",
-        "hex": "#1f1c1b"
-      },
-      {
-        "key": "1/8",
-        "hex": "#1f1c1b"
-      },
-      {
-        "key": "6/6",
-        "hex": "#969391"
-      },
-      {
-        "key": "4/6",
-        "hex": "#635f5e"
-      },
-      {
-        "key": "9/2",
-        "hex": "#e5e2e1"
-      },
-      {
-        "key": "4/10",
-        "hex": "#635f5e"
-      },
-      {
-        "key": "5/10",
-        "hex": "#7c7978"
-      },
-      {
-        "key": "5/4",
-        "hex": "#7c7978"
-      },
-      {
-        "key": "8/4",
-        "hex": "#cac7c6"
-      },
-      {
-        "key": "5/8",
-        "hex": "#7c7978"
-      },
-      {
-        "key": "6/8",
-        "hex": "#969391"
-      },
-      {
-        "key": "8/6",
-        "hex": "#cac7c6"
-      },
-      {
-        "key": "7/8",
-        "hex": "#b0adab"
-      },
-      {
-        "key": "3/12",
-        "hex": "#4a4746"
-      },
-      {
-        "key": "9/12",
-        "hex": "#e5e2e1"
-      },
-      {
-        "key": "1/100",
-        "hex": "#969391"
-      },
-      {
-        "key": "2/100",
-        "hex": "#b0adab"
-      },
-      {
-        "key": "3/100",
-        "hex": "#ffffff"
-      },
-      {
-        "key": "4/100",
-        "hex": "#EEEEEE"
-      },
-      {
-        "key": "5/100",
-        "hex": "#EEEEEE"
-      },
+		……
       {
         "key": "6/100",
         "hex": "#000000"
@@ -598,40 +518,93 @@ https://weread.qq.com/api/book/info?bookId=27416212
 
 ### Request
 
-https://weread.qq.com/web/book/bookmarklist?bookId=27416212
+https://weread.qq.com/web/book/bookmarklist?bookId=29599977
+
+不带bookId可以查询所有的
+
+参数
+
+| 参数名  | 说明                    |
+| ------- | ----------------------- |
+| bookId  | 书的id                  |
+| syncKey | 更新时间，默认0，可不写 |
 
 ### Response
 
 ```json
 {
-  "synckey": 1745909123,
+  "synckey": 1746854926,
   "updated": [
-    {
-      "bookId": "27416212",
+	{
+      "bookId": "29599977",
+      "bookVersion": 1187272633,
+      "chapterUid": 188,
+      "markText": "这一次，基娅终于释然了。",
+      "range": "2597-2609",
       "style": 2,
-      "bookVersion": 56464877,
-      "range": "1227-1255",
-      "markText": "基因组的作用只有在与环境相互作用的情况下才能真正被理解。",
-      "colorStyle": 3,
       "type": 1,
-      "chapterUid": 57,
-      "createTime": 1745909123,
-      "bookmarkId": "27416212_57_1227-1255"
+      "createTime": 1640907831,
+      "bookmarkId": "29599977_62_2535-2547"
     },
     {
-      "bookId": "27416212",
-      "style": 2,
-      "bookVersion": 56464877,
-      "range": "4819-4907",
-      "markText": "由于我们的大脑会出现异常的波动，有时候会发现自己更为急躁、幽默、健谈、平静、有活力，或者思维更清晰。我们的内在环境和外在行为受到生物基础的引导，既不能直接接触，也不能直接认识。",
-      "colorStyle": 3,
+      "bookId": "29599977",
+      "bookVersion": 1187272633,
+      "chapterUid": 182,
+      "markText": "地位较低的男性需要通过大吼大叫来获取注意。",
+      "range": "789-810",
+      "style": 1,
       "type": 1,
-      "chapterUid": 56,
-      "createTime": 1745892075,
-      "bookmarkId": "27416212_56_4819-4907"
+      "createTime": 1640820868,
+      "bookmarkId": "29599977_56_702-723"
     },
     ...//其他划线
   ]
+  "removed": [], // 删除的
+  "chapters": [ // 章节信息
+    {
+      "bookId": "29599977",
+      "chapterUid": 188,
+      "chapterIdx": 64,
+      "title": "57 萤火虫"
+    },    
+    ……
+    {
+      "bookId": "29599977",
+      "chapterUid": 182,
+      "chapterIdx": 58,
+      "title": "51 月亏"
+    }
+  ],
+  "book": { // 书籍信息
+    "bookId": "29599977",
+    "version": 1187272633,
+    "format": "epub",
+    "soldout": 0,
+    "bookStatus": 1,
+    "cover": "https://cdn.weread.qq.com/weread/cover/7/YueWen_29599977/s_YueWen_29599977.jpg",
+    "title": "蝲蛄吟唱的地方（电影《沼泽深处的女孩》原著）",
+    "author": "迪莉娅·欧文斯",
+    "coverBoxInfo": {
+      "blurhash": "KTFX@vn$E2I9I=NH~pRjRj",
+      "colors": [
+        {
+          "key": "6/4",
+          "hex": "#969391"
+        },        
+        ……
+        {
+          "key": "6/100",
+          "hex": "#000000"
+        }
+      ],
+      "dominate_color": {
+        "hex": "#090303",
+        "hsv": [5.78243933758684, 70.0564277836027, 3.34355042960825]
+      },
+      "custom_cover": "https://weread-1258476243.file.myqcloud.com/bookalphacover/977/29599977/s_29599977.jpg",
+      "custom_rec_cover": "https://weread-1258476243.file.myqcloud.com/bookreccover/977/29599977/s_29599977.jpg"
+    }
+  }
 }
 ```
 
@@ -643,7 +616,7 @@ synckey为该书最新笔记的时间，每条review下方的create time就是�
 
 ### Request
 
-https://weread.qq.com/api/review/list?bookId=29599977&listType=11&syncKey=0&mine=1
+https://weread.qq.com/api/review/list?bookId=29599977&listType=11&syncKey=0&mine=1 （这里省略了部分参数）
 
 https://weread.qq.com/web/review/list?bookId=29599977&listType=11&listMode=2&syncKey=0&mine=1&count=0 
 
@@ -664,7 +637,7 @@ https://weread.qq.com/web/review/list?bookId=29599977&listType=11&listMode=2&syn
 
 ### Response
 
-api
+/api/review/list
 
 ```json
 {
@@ -953,7 +926,7 @@ api
 }
 ```
 
-web
+/web/review/list
 
 ```json
 {
@@ -1218,44 +1191,58 @@ web
 }
 ```
 
-type=4，貌似是书的点评，type=1是普通的想法。
+type=4，书的点评，type=1是普通的想法。
 
-## 获取指定书籍的阅读状态详情
-Request: https://weread.qq.com/web/book/getProgress?bookId=27416212
-Response
+## 获取指定书籍的阅读进度
+### Request
+
+https://weread.qq.com/web/book/getProgress?bookId=29599977
+
+参数
+
+| 参数名 | 说明   |
+| ------ | ------ |
+| bookId | 书的id |
+
+### Response
 
 ```json
 {
-  "bookId": "27416212",
+  "bookId": "29599977",
   "book": {
-    "appId": "wb182564874663h1484727348",
-    "bookVersion": 56464877,
+    "appId": "35711832172614269128502745021697888382",
+    "bookVersion": 1187272633,
     "reviewId": "",
-    "chapterUid": 57,
-    "chapterOffset": 7602,
-    "chapterIdx": 57,
-    "updateTime": 1746100898,
-    "synckey": 1480012580,
-    "summary": "就的模式。世界各地的实验室正在努力弄清楚",
-    "repairOffsetTime": 0,
-    "readingTime": 72917,  // 阅读时长，秒
-    "progress": 96,   // 阅读进度，百分比
+    "chapterUid": 127,
+    "chapterOffset": 335,
+    "chapterIdx": 65,
+    "updateTime": 1747088114,
+    "synckey": 590787965,
+    "summary": "致谢\n向我的双胞胎兄弟博比·戴克斯致以最深的谢意，感谢他对我",
+    "repairOffsetTime": 1741181319,
+    "readingTime": 37039, // 阅读时长，秒
+    "progress": 100, // 阅读进度，百分比
     "isStartReading": 1,
     "ttsTime": 0,
-    "startReadingTime": 1740815642,
-    "installId": "",
-    "recordReadingTime": 0
+    "startReadingTime": 1639577081,
+    "installId": "3157942231332302471324568415",
+    "recordReadingTime": 0,
+    "finishTime": 1640924988
   },
   "canFreeRead": 0,
-  "timestamp": 1746100909
+  "timestamp": 1747184325
 }
 ```
 
 
 
 ## 获取指定书籍的章节信息
-Request: POST https://weread.qq.com/web/book/chapterInfos
-Headers:
+### Request
+
+POST https://weread.qq.com/web/book/chapterInfos
+
+Headers
+
 ```
 Cookie: [your_cookie]
 Content-Type: application/json;charset=UTF-8
@@ -1263,16 +1250,204 @@ Accept: application/json, text/plain, */*
 Origin: https://weread.qq.com
 Referer: https://weread.qq.com/web/reader/[bookId]
 ```
+参数
+
+参数以json形式传递
+
+| 参数名  | 说明                                                         |
+| ------- | ------------------------------------------------------------ |
+| bookIds | 数组格式，数组中第一个元素为字符串格式的书籍id，数组中其他参数不确定，默认可以不填 |
+
 Body: 
-```json
-{"bookIds":["27416212"]}
-```
-
-Response示例: 
 
 ```json
-{"data":[{"bookId":"27416212","soldOut":0,"clearAll":0,"chapterUpdateTime":1722521808,"updated":[{"chapterUid":1,"chapterIdx":1,"updateTime":0,"readAhead":0,"title":"封面","wordCount":1,"price":0,"paid":0,"isMPChapter":0,"level":1,"files":["Text/coverpage.xhtml"]},{"chapterUid":2,"chapterIdx":2,"updateTime":1659067784,"readAhead":0,"title":"版权信息","wordCount":150,"price":0,"paid":0,"isMPChapter":0,"level":1,"files":["Text/copyright.xhtml"]},
-// ... 其他章节信息
-]}
+{"bookIds":["29599977"]}
 ```
+
+### Response
+
+```json
+{
+    "data": [
+        {
+            "bookId": "29599977", 
+            "soldOut": 0, 
+            "clearAll": 0, 
+            "chapterUpdateTime": 1745913808, 
+            "updated": [
+                {
+                    "chapterUid": 1, 
+                    "chapterIdx": 1, 
+                    "updateTime": 1745912985, 
+                    "readAhead": 0, 
+                    "tar": "https://res.weread.qq.com/wrco/tar_CB_29599977_1", 
+                    "title": "封面", 
+                    "wordCount": 1, 
+                    "price": 0, 
+                    "paid": 0, 
+                    "isMPChapter": 0, 
+                    "level": 1, 
+                    "files": [
+                        "Text/cover.xhtml"
+                    ]
+                }, 
+                {
+                    "chapterUid": 64, 
+                    "chapterIdx": 2, 
+                    "updateTime": 1745913808, 
+                    "readAhead": 0, 
+                    "tar": "", 
+                    "title": "版权信息", 
+                    "wordCount": 128, 
+                    "price": 0, 
+                    "paid": 0, 
+                    "isMPChapter": 0, 
+                    "level": 1, 
+                    "files": [
+                        "Text/copyright.xhtml"
+                    ]
+                }, 
+                {
+                    "chapterUid": 65, 
+                    "chapterIdx": 3, 
+                    "updateTime": 1678986611, 
+                    "readAhead": 0, 
+                    "tar": "", 
+                    "title": "献词", 
+                    "wordCount": 46, 
+                    "price": 0, 
+                    "paid": 0, 
+                    "isMPChapter": 0, 
+                    "level": 1, 
+                    "files": [
+                        "Text/Section0001.xhtml"
+                    ]
+                }, 
+                {
+                    "chapterUid": 128, 
+                    "chapterIdx": 4, 
+                    "updateTime": 1745912985, 
+                    "readAhead": 0, 
+                    "tar": "https://res.weread.qq.com/wrco/tar_CB_29599977_4", 
+                    "title": "地图", 
+                    "wordCount": 1, 
+                    "price": 0, 
+                    "paid": 0, 
+                    "isMPChapter": 0, 
+                    "level": 1, 
+                    "files": [
+                        "Text/Section0002.xhtml"
+                    ]
+                }, 
+                {
+                    "chapterUid": 129, 
+                    "chapterIdx": 5, 
+                    "updateTime": 1745912985, 
+                    "readAhead": 0, 
+                    "tar": "https://res.weread.qq.com/wrco/tar_CB_29599977_5", 
+                    "title": "第一部分 湿地", 
+                    "wordCount": 8, 
+                    "price": 0, 
+                    "paid": 0, 
+                    "isMPChapter": 0, 
+                    "level": 1, 
+                    "files": [
+                        "Text/Section0003.xhtml"
+                    ]
+                }, 
+                {
+                    "chapterUid": 130, 
+                    "chapterIdx": 6, 
+                    "updateTime": 1745912985, 
+                    "readAhead": 0, 
+                    "tar": "https://res.weread.qq.com/wrco/tar_CB_29599977_6", 
+                    "title": "序言", 
+                    "wordCount": 388, 
+                    "price": 0, 
+                    "paid": 0, 
+                    "isMPChapter": 0, 
+                    "level": 2, 
+                    "files": [
+                        "Text/Section0003_0001.xhtml"
+                    ]
+                }, 
+                {
+                    "chapterUid": 131, 
+                    "chapterIdx": 7, 
+                    "updateTime": 1745912985, 
+                    "readAhead": 0, 
+                    "tar": "https://res.weread.qq.com/wrco/tar_CB_29599977_7", 
+                    "title": "1 妈妈", 
+                    "wordCount": 3532, 
+                    "price": 0, 
+                    "paid": 0, 
+                    "isMPChapter": 0, 
+                    "level": 2, 
+                    "files": [
+                        "Text/Section0003_0002.xhtml"
+                    ]
+                }, 
+ 				……               
+                {
+                    "chapterUid": 188, 
+                    "chapterIdx": 64, 
+                    "updateTime": 1745912985, 
+                    "readAhead": 0, 
+                    "tar": "https://res.weread.qq.com/wrco/tar_CB_29599977_64", 
+                    "title": "57 萤火虫", 
+                    "wordCount": 4953, 
+                    "price": -1, 
+                    "paid": 0, 
+                    "isMPChapter": 0, 
+                    "level": 2, 
+                    "files": [
+                        "Text/Section0004_0036.xhtml"
+                    ]
+                }, 
+                {
+                    "chapterUid": 127, 
+                    "chapterIdx": 65, 
+                    "updateTime": 1678986611, 
+                    "readAhead": 0, 
+                    "tar": "", 
+                    "title": "致谢", 
+                    "wordCount": 587, 
+                    "price": -1, 
+                    "paid": 0, 
+                    "isMPChapter": 0, 
+                    "level": 1, 
+                    "files": [
+                        "Text/Section0005.xhtml"
+                    ]
+                }
+            ], 
+            "removed": [ ], 
+            "synckey": 1187272633, 
+            "copyRightSynckey": 1, 
+            "book": {
+                "bookId": "29599977", 
+                "version": 1187272633, 
+                "format": "epub", 
+                "cover": "https://cdn.weread.qq.com/weread/cover/7/YueWen_29599977/s_YueWen_29599977.jpg", 
+                "title": "蝲蛄吟唱的地方（电影《沼泽深处的女孩》原著）", 
+                "author": "迪莉娅·欧文斯", 
+                "price": 41.99, 
+                "type": 0
+            }
+        }
+    ]
+}
+```
+
+## 其他
+
+https://weread.qq.com/web/user?userVid=39942883  获取指定用户的信息 
+
+https://weread.qq.com/web/book/tags?bookId=29599977 获取指定书籍的标签
+
+https://weread.qq.com/web/book/readInfo?bookId=29599977&finishedBookCount=1&finishedBookIndex=1&finishedDate=1 获取指定书籍的阅读信息
+
+https://weread.qq.com/web/book/underlines?bookId=29599977&chapterUid=127 
+
+https://weread.qq.com/web/book/read [POST]
 

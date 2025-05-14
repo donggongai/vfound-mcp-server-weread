@@ -62,7 +62,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
-        name: "search_books",
+        name: "get_books",
         description: "Search for books in the user's bookshelf by keywords and return matching books with details and reading progress",
         inputSchema: {
           type: "object",
@@ -134,21 +134,23 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       // 获取书架
       case "get_bookshelf": {
         // 获取完整书架信息
-        const entireShelfData = await wereadApi.getEntireShelf();
+        const shelfData = await wereadApi.getShelf();
         // 获取有笔记的书籍信息
-        const notebookData = await wereadApi.getBookshelf();
+        const notebookData = await wereadApi.getNoteBooks();
         
         // 提取和分析数据
-        const bookProgress = entireShelfData.bookProgress || [];
-        const shelfBooks = entireShelfData.books || [];
-        const archiveData = entireShelfData.archive || [];
-        const notebookBooks = notebookData.books || [];
+        const bookProgress = shelfData.bookProgress || []; // 书籍的阅读进度
+        const shelfBooks = shelfData.books || []; // 书籍
+        const archiveData = shelfData.archive || []; // 分组
+        const notebookBooks = notebookData.books || []; // 带笔记的书籍
         
         // 统计信息 - 阅读状态
         const totalBooks = shelfBooks.length;
         // 未读书籍：finishReading = 0 且 progress = 0
         const unreadBooks = shelfBooks.filter((book: any) => {
           const progress = bookProgress.find((p: any) => p.bookId === book.bookId);
+          // 过滤出未读完（finishReading 不等于 1）且阅读进度为 0 的书籍。
+          // 如果 progress 不存在，说明没有阅读进度，也视为未读；或者 progress 存在但进度为 0 也视为未读。
           return book.finishReading !== 1 && (!progress || progress.progress === 0);
         }).length;
         // 在读书籍：finishReading = 0 且 progress > 0
@@ -161,7 +163,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         
         // 导入书籍统计（CB开头的bookId）
         const importedBooks = shelfBooks.filter((book: any) => book.bookId.startsWith('CB_')).length;
-        const wereadBooks = totalBooks - importedBooks;
+        const wereadBooks = totalBooks - importedBooks; // 微信读书里面的书
         
         // 已购买书籍
         const paidBooks = shelfBooks.filter((book: any) => book.paid === 1).length;
@@ -187,7 +189,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           .map(([category, count]) => ({ category, count }));
         
         // 书单统计
-        const totalCategories = archiveData.length;
+        const totalGroups = archiveData.length;
         const categoryCounts = archiveData.map((archive: any) => ({
           name: archive.name,
           count: archive.bookIds ? archive.bookIds.length : 0
@@ -195,11 +197,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         
         // 排序找出最大和最小的书单
         const sortedCategories = [...categoryCounts].sort((a, b) => b.count - a.count);
-        const largestCategory = sortedCategories.length > 0 ? sortedCategories[0] : null;
-        const smallestCategory = sortedCategories.length > 0 ? sortedCategories[sortedCategories.length - 1] : null;
+        const largestGroup = sortedCategories.length > 0 ? sortedCategories[0] : null;
+        const smallestGroup = sortedCategories.length > 0 ? sortedCategories[sortedCategories.length - 1] : null;
         
         // 获取书单分类信息
-        const booklists = archiveData.map((archive: any) => ({
+        const bookgroups = archiveData.map((archive: any) => ({
           name: archive.name,
           id: archive.archiveId,
           bookCount: archive.bookIds ? archive.bookIds.length : 0
@@ -232,7 +234,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             author: book.author || "",
             translator: book.translator || "",
             categories: categories,
-            bookLists: belongCategories,
+            bookgroups: belongCategories,
             publishTime: book.publishTime || "",
             finishReading: book.finishReading === 1,
             price: book.price || 0,
@@ -253,37 +255,37 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             type: "text",
             text: JSON.stringify({
               stats: {
-                totalBooks,
-                readingStatus: {
-                  unreadBooks,
-                  readingBooks,
-                  finishedBooks
+                totalBooks, // 总数
+                readingStatus: { // 阅读状态
+                  unreadBooks, // 未读数
+                  readingBooks, // 在读数
+                  finishedBooks // 读完数
                 },
                 bookSource: {
-                  importedBooks,
-                  wereadBooks
+                  importedBooks, // 导入的书籍数量
+                  wereadBooks // 微信读书官方的书籍数量
                 },
-                paidBooks,
-                booksWithideas,
+                paidBooks, // 购买书籍数量
+                booksWithideas, // 有笔记的书籍
                 categories: {
-                  categoryStats,
-                  mainCategories
+                  categoryStats, // 各分类及其包含的书籍数量
+                  mainCategories // 书籍数量最多的前5个
                 }
               },
-              booklistStats: {
-                totalCategories,
-                largestCategory,
-                smallestCategory
+              bookgroupStats: {
+                totalGroups, // 总分组数
+                largestGroup, // 书籍最多的分组及其个数
+                smallestGroup // 书籍最少的分组及其个数
               },
-              booklists,
-              books
+              bookgroups, // 分组详情
+              books // 书详情
             }, null, 2)
           }]
         };
       }
 
       // 通过关键词检索用户书架上的书籍
-      case "search_books": {
+      case "get_books": {
         const keyword = String(request.params.arguments?.keyword || "");
         const exactMatch = Boolean(request.params.arguments?.exact_match || false);
         const includeDetails = Boolean(request.params.arguments?.include_details !== false);
@@ -294,13 +296,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         }
         
         // 1. 获取完整书架信息
-        const entireShelfData = await wereadApi.getEntireShelf();
-        const shelfBooks = entireShelfData.books || [];
-        const bookProgress = entireShelfData.bookProgress || [];
-        const archiveData = entireShelfData.archive || [];
+        const shelfData = await wereadApi.getShelf();
+        const shelfBooks = shelfData.books || [];
+        const bookProgress = shelfData.bookProgress || [];
+        const archiveData = shelfData.archive || [];
         
         // 2. 获取有笔记的书籍信息
-        const notebookData = await wereadApi.getBookshelf();
+        const notebookData = await wereadApi.getNoteBooks();
         const notebookBooks = notebookData.books || [];
         
         // 3. 根据关键词筛选
